@@ -1,0 +1,89 @@
+{
+  "name": "devpilot",
+  "displayName": "DevPilot",
+  "description": "Free local AI coding assistant powered by Ollama",
+  "version": "1.0.0",
+  "publisher": "devpilot",
+  "license": "MIT",
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Other", "Machine Learning"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      { "command": "devpilot.openChat",       "title": "DevPilot: Open Chat" },
+      { "command": "devpilot.explainCode",    "title": "DevPilot: Explain Code" },
+      { "command": "devpilot.explain",        "title": "DevPilot: Explain Code" },
+      { "command": "devpilot.fixSnippet",     "title": "DevPilot: Fix Code" },
+      { "command": "devpilot.fix",            "title": "DevPilot: Fix Code" },
+      { "command": "devpilot.reviewCode",     "title": "DevPilot: Review Code" },
+      { "command": "devpilot.generateTests",  "title": "DevPilot: Generate Tests" },
+      { "command": "devpilot.generateDocs",   "title": "DevPilot: Generate Documentation" },
+      { "command": "devpilot.refactor",       "title": "DevPilot: Refactor Code" },
+      { "command": "devpilot.completeCode",   "title": "DevPilot: Complete Code at Cursor" },
+      { "command": "devpilot.renameSymbol",   "title": "DevPilot: Suggest Rename" },
+      { "command": "devpilot.fixBuildErrors", "title": "DevPilot: Fix Build Errors" },
+      { "command": "devpilot.fixDiagnostic",  "title": "DevPilot: Fix Diagnostic" }
+    ],
+    "menus": {
+      "editor/context": [
+        { "command": "devpilot.explain",       "when": "editorHasSelection", "group": "devpilot@1" },
+        { "command": "devpilot.fix",           "when": "editorHasSelection", "group": "devpilot@2" },
+        { "command": "devpilot.reviewCode",    "when": "editorHasSelection", "group": "devpilot@3" },
+        { "command": "devpilot.generateTests", "when": "editorHasSelection", "group": "devpilot@4" },
+        { "command": "devpilot.generateDocs",  "when": "editorHasSelection", "group": "devpilot@5" },
+        { "command": "devpilot.refactor",      "when": "editorHasSelection", "group": "devpilot@6" }
+      ],
+      "editor/title": [
+        { "command": "devpilot.openChat", "group": "navigation@99" }
+      ]
+    },
+    "configuration": {
+      "title": "DevPilot",
+      "properties": {
+        "devpilot.backendUrl": {
+          "type": "string",
+          "default": "http://localhost:5050",
+          "description": "DevPilot backend URL"
+        },
+        "devpilot.ollamaUrl": {
+          "type": "string",
+          "default": "http://localhost:11434",
+          "description": "Ollama server URL (for inline completions)"
+        },
+        "devpilot.model": {
+          "type": "string",
+          "default": "qwen2.5-coder:7b",
+          "description": "Model for inline completions"
+        },
+        "devpilot.enableInlineCompletions": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable ghost-text inline completions"
+        },
+        "devpilot.completionDebounceMs": {
+          "type": "number",
+          "default": 500,
+          "description": "Debounce delay (ms) before requesting a completion"
+        },
+        "devpilot.maxContextLines": {
+          "type": "number",
+          "default": 80,
+          "description": "Lines of context sent for completions"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package --allow-missing-repository --no-dependencies"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.4.0",
+    "@vscode/vsce": "^2.24.0"
+  }
+}
